@@ -12,7 +12,7 @@ title: Homepage
     </a>
   </h1>
   <div class="post-date">{{ post.date | date: "%b %-d, %Y" }}</div>
-  {{ post.content }}
+  {{ post.content | strip_html | truncate: 200  }}
 </article>
 
 {% endfor %}
