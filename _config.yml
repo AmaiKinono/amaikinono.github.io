@@ -1,2 +1,19 @@
-title: Kinono
-description: Kinono's personal blog.
+title: "Kinono's blog"
+author:
+  name: 'Kinono'
+
+path: ''
+
+markdown: kramdown
+
+sass:
+  sass_dir: css
+  style:    expanded
+
+permalink: /:title.html
+
+exclude:
+- README.md
+
+safe: true
+lsi: false
