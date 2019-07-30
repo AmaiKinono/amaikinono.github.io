@@ -45,7 +45,7 @@ If you are not sure which is the disk to be partitioned, run `lsblk` and look in
 
 Command line tools may not actually do the formatting, so you need to do it yourself:
 
-``` sh
+``` console
 # mkfs.fat -F32 /dev/sdX1
 # mkfs.ext4 /dev/sdX2
 ```
@@ -54,7 +54,7 @@ If you are installing to a usb stick, you may want to create the ext4 partition 
 
 Now we need to mount the file systems:
 
-``` sh
+``` console
 # mount /dev/sdX2 /mnt
 $ mkdir -p /mnt/boot/efi
 # mount /dev/sdX1 /mnt/boot/efi
@@ -70,25 +70,25 @@ Now we have full access to `/dev/sdX`, let's install something to it.
 
 The packages will be downloaded from internet, so make sure you are using the fastest mirrors:
 
-``` sh
+``` console
 # pacman-mirrors --fasttrack
 ```
 
 Or you can specify your location:
 
-``` sh
+``` console
 # pacman-mirrors -c Country_name
 ```
 
 Avaliable countries are:
 
-``` sh
+``` console
 # pacman-mirrors --country-list
 ```
 
 Then install the base packages:
 
-``` sh
+``` console
 $ basestrap /mnt base
 ```
 
@@ -100,7 +100,7 @@ $ basestrap /mnt base
 
 Run
 
-``` sh
+``` console
 # bash -c 'fstabgen /mnt >> /mnt/etc/fstab'
 ```
 
@@ -112,7 +112,7 @@ You can then edit `/mnt/etc/fstab` (using `nano` or other editors). I replaced a
 
 Run
 
-``` sh
+``` console
 # manjaro-chroot /mnt
 ```
 
@@ -122,7 +122,7 @@ Some terminal emulators may not handle backspace input correctly after chroot. I
 
 Run the following command to set the time zone to, for example, Shanghai:
 
-``` sh
+``` console
 # ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # hwclock --systohc
 ```
@@ -131,7 +131,7 @@ Look into `/usr/share/zoneinfo/` to find your nearest city.
 
 If you dual boot Manjaro and Windows, they will have a time difference, and you can use local time in Manjaro:
 
-``` sh
+``` console
 # timedatectl set-local-rtc 1 --adjust-system-clock
 ```
 
@@ -139,12 +139,12 @@ Or use UTC time in Windows. Search the internet for how to do this.
 
 Edit `/etc/locale.gen` to set the locales:
 
-``` sh
+``` console
 # nano /etc/locale.gen
 ```
 Uncomment your needed locales and run
 
-``` sh
+``` console
 # locale-gen
 ```
 
@@ -158,7 +158,7 @@ LANG=en_US.UTF-8
 
 Come up with a pretty name for your PC, put it in `/etc/hostname`. Then modify `/etc/hosts`:
 
-``` sh
+``` console
 127.0.0.1	localhost.localdomain	localhost
 ::1		localhost.localdomain	localhost
 127.0.1.1	myhostname.localdomain	myhostname
@@ -170,7 +170,7 @@ replace `myhostname` with your hostname.
 
 Run
 
-``` sh
+``` console
 # passwd
 ```
 
@@ -178,19 +178,19 @@ to set your superuser password.
 
 Create a user for yourself:
 
-``` sh
+``` console
 # useradd -m -G wheel myusername
 ```
 
 Set a passwork for it:
 
-``` sh
+``` console
 # passwd myusername
 ```
 
 Now use `visudo` to edit the configuration file of `sudo`, it will see if you are making syntax errors so it's more safe than edit it directly. You can specify the editor:
 
-``` sh
+``` console
 # EDITOR=nano visudo
 ```
 
@@ -206,7 +206,7 @@ Uncomment it to make `sudo` avaliable to the `wheel` user group.
 
 First is the kernel itself. Pick whatever you want. I use the current LTS kernel:
 
-``` sh
+``` console
 # pacman -S linux419
 ```
 
@@ -229,7 +229,7 @@ Below are some packages or groups you may want to install now:
 
 Use `mhwd` to auto install graphic drivers needed:
 
-``` bash
+``` console
 # mhwd -a pci free 0300
 ```
 
@@ -241,13 +241,13 @@ Install `grub`. If you have dual/multi booting, also install `os-prober`. Since 
 
 Run:
 
-``` sh
+``` console
 # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=manjaro --recheck
 ```
 
 If you are installing the OS to a USB stick, `--removable` parameter is also needed. Then:
 
-``` sh
+``` console
 # update-grub
 ```
 
@@ -267,7 +267,7 @@ Run `shutdown now` to shutdown the PC. Remove the installation media, then you s
 
 The first thing to do is connecting to the internet. Run:
 
-``` sh
+``` console
 # systemctl enable NetworkManager.service
 # systemctl start NetworkManager.service
 ```
