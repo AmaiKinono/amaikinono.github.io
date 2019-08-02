@@ -16,6 +16,9 @@ sass:
 permalink: /:title.html
 
 exclude:
+- Gemfile
+- Gemfile.lock
+- vendor
 - README.md
 
 safe: true
