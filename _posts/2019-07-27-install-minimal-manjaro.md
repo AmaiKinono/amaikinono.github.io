@@ -274,9 +274,9 @@ The first thing to do is connecting to the internet. Run:
 
 Then run `nmtui`.
 
-You may want a desktop environment. I'll take i3wm as an example, and show you a way to use the desktop environment without a display manager.
+You may want a desktop environment. I'll take i3wm as an example, and show you a way to use the desktop environment without a display manager. `i3` is a package group, and you may want to put together your own combinations (like `i3-wm` + `polybar`) instead of using it.
 
-First, install `xorg`, `xorg-init` and `i3`. Put this in your `~/.bash_profile` (or `~/.zprofile` if you are using zsh):
+First, install `xorg`, `xorg-xinit` and `i3`. Put this in your `~/.bash_profile` (or `~/.zprofile` if you are using zsh):
 
 ``` bash
 if [[ ! ${DISPLAY} && ${XDG_VTNR} == 1 ]]; then
