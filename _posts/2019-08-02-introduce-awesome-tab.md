@@ -62,7 +62,7 @@ The default ace strings are made up with `j`, `k`, `d` and `f`, so you can acces
 
 What if I want to move to a tab out of current screen? Well, you have to use the searching method (ivy/helm). But the correct way to use tabs is to move frequently used buffers into the first screen, then stay there, so very occasionally we have to search for buffers. Let me show you how to do it.
 
-First you need this function. (Andy has not decided if this is the best way. Hopefully this command will get into awesome-tab's codebase.)
+First you need this function. (~~Andy has not decided if this is the best way. Hopefully this command will get into awesome-tab's codebase.~~ This is already provided by awesome-tab!)
 
 ``` emacs-lisp
 (defun awesome-tab-move-current-tab-to-beg ()
@@ -89,41 +89,39 @@ After several cycles, you have all your frequently used buffers in the first scr
 
 ## Bonus: Hydra Makes it Easier
 
-Here's a hydra for you to do consecutive moves in the buffer matrix. It can also move between windows and manage your buffers, I find it way easier to use than `ibuffer`:
+I've put a hydra example in the README of awesome-tab, but it has a lot of commands. Here's what I really use. I can do consecutive moves in the buffer matrix, between windows, and manage my buffers. I find it way easier to use than `ibuffer`:
 
 ``` emacs-lisp
 (defhydra toki-fast-switch (:hint nil)
   "
- ^^^^Fast Move             ^^^^^^Tab                        ^^Search            ^^Misc
--^^^^--------------------+-^^^^^^-----------------------+-^^----------------+-^^---------------------------
-   ^_k_^   prev group    | _C-a_^^^^       select first | _b_ search buffer | _C-k_   kill buffer
- _h_   _l_  switch tab   | _C-e_^^^^       select last  | _g_ search group  | _C-S-k_ kill others in group
-   ^_j_^   next group    | _C-j_^^^^       ace jump     | ^^                | ^^
- ^^0 ~ 9^^ select window | _C-h_/_C-l_/_A_ move to      | ^^                | ^^
--^^^^--------------------+-^^^^^^-----------------------+-^^----------------+-^^---------------------------
-"
+ ^^^^Fast Move           | ^^^^^^Tab                | ^^Misc
+-^^^^--------------------+-^^^^^^-------------------+-^^---------------------------
+   ^_k_^   prev group    | _a_^^^^     select first | _C-k_   kill buffer
+ _h_   _l_  switch tab   | _e_^^^^     select last  | _C-S-k_ kill others in group
+   ^_j_^   next group    | _C-j_^^^^   ace jump     | ^^
+ _0_ ~ _9_ select window | _H_/_L_/_A_ move to      | ^^
+-^^^^--------------------+-^^^^^^-------------------+-^^---------------------------
+ "
   ("h" awesome-tab-backward-tab)
   ("j" awesome-tab-forward-group)
   ("k" awesome-tab-backward-group)
   ("l" awesome-tab-forward-tab)
-  ("0" my-select-window)
-  ("1" my-select-window)
-  ("2" my-select-window)
-  ("3" my-select-window)
-  ("4" my-select-window)
-  ("5" my-select-window)
-  ("6" my-select-window)
-  ("7" my-select-window)
-  ("8" my-select-window)
-  ("9" my-select-window)
-  ("C-a" awesome-tab-select-beg-tab)
-  ("C-e" awesome-tab-select-end-tab)
+  ("0" toki-select-window)
+  ("1" toki-select-window)
+  ("2" toki-select-window)
+  ("3" toki-select-window)
+  ("4" toki-select-window)
+  ("5" toki-select-window)
+  ("6" toki-select-window)
+  ("7" toki-select-window)
+  ("8" toki-select-window)
+  ("9" toki-select-window)
+  ("a" awesome-tab-select-beg-tab)
+  ("e" awesome-tab-select-end-tab)
   ("C-j" awesome-tab-ace-jump)
-  ("C-h" awesome-tab-move-current-tab-to-left)
-  ("C-l" awesome-tab-move-current-tab-to-right)
+  ("H" awesome-tab-move-current-tab-to-left)
+  ("L" awesome-tab-move-current-tab-to-right)
   ("A" awesome-tab-move-current-tab-to-beg)
-  ("b" ivy-switch-buffer)
-  ("g" awesome-tab-counsel-switch-group)
   ("C-k" kill-current-buffer)
   ("C-S-k" awesome-tab-kill-other-buffers-in-current-group)
   ("q" nil "quit"))
@@ -150,4 +148,4 @@ WIN-ID : Window index."
      (string-to-number (car (nreverse (split-string key-desc "-")))))))
 ```
 
-When you feel like you need a cleanup, call it, move around windows and buffers, rearranging them, and kill the unused ones. I put too many commands in it, and you should definitely create your own hydra with commands you like to use.
+When you feel like you need a cleanup, call it, move around windows and buffers, rearranging them, and kill the unused ones.
